@@ -14,6 +14,11 @@ public class SystemMediaScanner {
 
     private List<ImageBean> mImageList = new ArrayList<>();
     private Context mContext;
+    private int PAGE_SIZE = 5;
+    private long mTimestamp = System.currentTimeMillis();
+    private int mSIZE = 10240;
+    private int mWIDTH = 100;
+    private int mHEIGHT = 100;
 
     public SystemMediaScanner(Context context) {
         mContext = context;
@@ -40,22 +45,33 @@ public class SystemMediaScanner {
     public static final int INDEX_DATETAKEN = 7;
 
     public void scan() {
+        Log.v("bush", "scan started");
         // TODO Auto-generated method stub
         Cursor cursor = null;
-        mImageList = new ArrayList<ImageBean>();
+        Log.v("bush", "timestamp" + mTimestamp);
 
         try {
             ContentResolver mContentResolver = mContext.getContentResolver();
 
             cursor = mContentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    PROJECTION, MediaStore.Images.Media.MIME_TYPE + "=? or " + MediaStore.Images.Media.MIME_TYPE + "=?",
-                    new String[]{"image/jpeg", "image/png"},
-                    MediaStore.Images.Media._ID + " DESC");
+                    PROJECTION,
+                    String.format("(%s=? or %s=?) and %s<? and %s>? and %s>? and %s>?",
+                            MediaStore.Images.Media.MIME_TYPE,
+                            MediaStore.Images.Media.MIME_TYPE,
+                            MediaStore.Images.Media.DATE_TAKEN,
+                            MediaStore.Images.Media.SIZE,
+                            MediaStore.Images.Media.WIDTH,
+                            MediaStore.Images.Media.HEIGHT),
+                    new String[]{"image/jpeg", "image/png", String.valueOf(mTimestamp), String.valueOf(mSIZE),
+                    String.valueOf(mWIDTH), String.valueOf(mHEIGHT)},
+                    MediaStore.Images.Media.DATE_TAKEN + " DESC LIMIT " + PAGE_SIZE);
 
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     ImageBean bean = new ImageBean(cursor);
+                    Log.v("bush", bean.getId()+"");
                     mImageList.add(bean);
+                    mTimestamp = Math.min(bean.getDateTaken(), mTimestamp);
                 } while (cursor != null && cursor.moveToNext());
             }
 

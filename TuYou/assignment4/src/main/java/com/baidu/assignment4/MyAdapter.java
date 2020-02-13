@@ -54,15 +54,12 @@ public class MyAdapter extends BaseAdapter {
         ImageBean image = (ImageBean) getItem(position);
 
         TextView textView = convertView.findViewById(R.id.textview);
-        String text = "添加时间：" + "\n" + image.getDateAddedString() + "\n\n"
-                    + "拍照时间：" + "\n" + image.getDateTakenString() + "\n\n" + "长 X 宽 ：" + "\n" + image.getWidth() + " X "
-                +image.getHeight();
+        String text = "拍照时间：" + "\n" + image.getDateTakenString() + "\n\n" + "长 X 宽 ：" + "\n" + image.getWidth() + " X "
+                +image.getHeight() + "\n\n" + "文件大小" + "\n" + image.getSizeString();
         textView.setText(text);
 
         SimpleDraweeView draweeView = (SimpleDraweeView) convertView.findViewById(R.id.my_image_view);
         Uri uri = Uri.fromFile(new File(image.getPath()));
-        Log.v("bush", "path:" + image.getPath());
-        Log.v("bush", "uri:" + uri);
         draweeView.setImageURI(uri);
 
 //        TextView displayname = convertView.findViewById(R.id.displayname);
