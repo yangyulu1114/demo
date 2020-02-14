@@ -101,7 +101,7 @@ public class MainActivity extends Activity {
 //            }
 //        });
 
-        getActionBar().hide();
+//        getActionBar().hide();
 
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
