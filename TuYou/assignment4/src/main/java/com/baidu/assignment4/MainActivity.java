@@ -32,6 +32,8 @@ public class MainActivity extends Activity {
         mListView.setAdapter(mAdapter);
         mMediaScanner = new SystemMediaScanner(this);
 
+        getActionBar().hide();
+
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
             reFreshUi();
@@ -39,7 +41,6 @@ public class MainActivity extends Activity {
         if (permissionCheck == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_FOR_STORAGE);
         }
-
 
         setScrollListener();
     }
@@ -65,6 +66,9 @@ public class MainActivity extends Activity {
         }
     }
 
+    //    protected void setOnclickListener() {
+//        mActionBar.
+//    }
     protected void setScrollListener() {
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
