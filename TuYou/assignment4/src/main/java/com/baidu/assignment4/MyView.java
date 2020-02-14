@@ -25,24 +25,10 @@ public class MyView extends FrameLayout {
 
         LayoutInflater.from(context).inflate(R.layout.custome_action_bar, this);
 
-        mGestureDector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onDoubleTap(MotionEvent e) {
-                Log.v("bush", "onDoubleTap");
-                return true;
-            }
+    }
 
-            @Override
-            public boolean onDoubleTapEvent(MotionEvent e) {
-                return true;
-            }
-
-            @Override
-            public boolean onDown(MotionEvent e) {
-                return true;
-            }
-        });
-
+    public void setGestureListener(GestureDetector.SimpleOnGestureListener listener) {
+        mGestureDector = new GestureDetector(getContext(), listener);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.baidu.assignment4;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -8,9 +9,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.Toolbar;
 
 import java.util.List;
 
@@ -21,6 +27,7 @@ public class MainActivity extends Activity {
     private ListView mListView;
     private MyAdapter mAdapter;
     private SystemMediaScanner mMediaScanner;
+    private GestureDetector mGestureDector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,68 @@ public class MainActivity extends Activity {
         mAdapter = new MyAdapter(this);
         mListView.setAdapter(mAdapter);
         mMediaScanner = new SystemMediaScanner(this);
+        MyView view = findViewById(R.id.title_bar);
+        view.setGestureListener(new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                Log.v("bush", "onDoubleTap");
+                mListView.setSelection(0);
+                return true;
+            }
+
+            @Override
+            public boolean onDoubleTapEvent(MotionEvent e) {
+                return true;
+            }
+
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
+        });
+
+////        this.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        getActionBar().setDisplayShowCustomEnabled(true);
+////        getActionBar().setCustomView(R.layout.custome_action_bar);
+////        View view  = getActionBar().getCustomView();
+//
+//        View view = LayoutInflater.from(this).inflate(R.layout.custome_action_bar,null);
+//        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+//                ActionBar.LayoutParams.MATCH_PARENT);
+//        layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+////        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+////        getActionBar().setDisplayShowHomeEnabled(false);
+//        getActionBar().setDisplayShowCustomEnabled(true);
+////        getActionBar().setDisplayShowTitleEnabled(false);
+//        getActionBar().setCustomView(view, layoutParams);
+//
+//        Toolbar parent = (Toolbar) view.getParent();
+//        parent.setContentInsetsAbsolute(0, 0);
+//
+//        view.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return mGestureDector.onTouchEvent(event);
+//            }
+//        });
+//        mGestureDector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+//            @Override
+//            public boolean onDoubleTap(MotionEvent e) {
+//                Log.v("bush", "onDoubleTap");
+//                mListView.setSelection(0);
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onDoubleTapEvent(MotionEvent e) {
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onDown(MotionEvent e) {
+//                return true;
+//            }
+//        });
 
         getActionBar().hide();
 
