@@ -22,14 +22,14 @@ import java.util.List;
 public class MyAdapter extends BaseAdapter {
     private List<ImageBean> mImageBeanList;
     private Context mContext;
-    private int mWidth;
-    private int mHeight;
+//    private int mWidth;
+//    private int mHeight;
 
     public MyAdapter(Context mContext) {
         mImageBeanList = new LinkedList<>();
         this.mContext = mContext;
-        mWidth = mContext.getResources().getDimensionPixelOffset(R.dimen.image_width);
-        mHeight = mContext.getResources().getDimensionPixelOffset(R.dimen.image_height);
+//        mWidth = mContext.getResources().getDimensionPixelOffset(R.dimen.image_width);
+//        mHeight = mContext.getResources().getDimensionPixelOffset(R.dimen.image_height);
     }
 
     public void setImageList(List<ImageBean> imageList) {
