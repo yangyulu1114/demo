@@ -10,8 +10,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
@@ -27,7 +25,6 @@ public class MainActivity extends Activity {
     private ListView mListView;
     private MyAdapter mAdapter;
     private SystemMediaScanner mMediaScanner;
-    private GestureDetector mGestureDector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
