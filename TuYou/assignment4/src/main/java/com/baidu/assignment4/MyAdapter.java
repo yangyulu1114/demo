@@ -59,26 +59,28 @@ public class MyAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.listitem, null);
         }
 
+        MyListView listview_item = convertView.findViewById(R.id.my_listview_item);
         ImageBean image = (ImageBean) getItem(position);
+        listview_item.setMyListView(image);
 
-        TextView textView = convertView.findViewById(R.id.textview);
-        String text = "拍照时间：" + "\n" + image.getDateTakenString() + "\n\n" + "长 X 宽 ：" + "\n" + image.getWidth() + " X "
-                + image.getHeight() + "\n\n" + "文件大小" + "\n" + image.getSizeString();
-        textView.setText(text);
-
-        SimpleDraweeView draweeView = convertView.findViewById(R.id.my_image_view);
-        Uri uri = Uri.fromFile(new File(image.getPath()));
-
-        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri).setResizeOptions(new
-                ResizeOptions(mWidth, mHeight))
-                .build();
-
-        PipelineDraweeController controller = (PipelineDraweeController)
-                Fresco.newDraweeControllerBuilder()
-                        .setImageRequest(request)
-                        // other setters as you need
-                        .build();
-        draweeView.setController(controller);
+//        TextView textView = convertView.findViewById(R.id.textview);
+//        String text = "拍照时间：" + "\n" + image.getDateTakenString() + "\n\n" + "长 X 宽 ：" + "\n" + image.getWidth() + " X "
+//                + image.getHeight() + "\n\n" + "文件大小" + "\n" + image.getSizeString();
+//        textView.setText(text);
+//
+//        SimpleDraweeView draweeView = convertView.findViewById(R.id.my_image_view);
+//        Uri uri = Uri.fromFile(new File(image.getPath()));
+//
+//        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri).setResizeOptions(new
+//                ResizeOptions(mWidth, mHeight))
+//                .build();
+//
+//        PipelineDraweeController controller = (PipelineDraweeController)
+//                Fresco.newDraweeControllerBuilder()
+//                        .setImageRequest(request)
+//                        // other setters as you need
+//                        .build();
+//        draweeView.setController(controller);
 
 //        draweeView.setImageURI(uri);
 
