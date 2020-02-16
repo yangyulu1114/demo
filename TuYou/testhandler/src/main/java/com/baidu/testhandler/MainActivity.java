@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
                     mHandler.removeMessages(2);
                     return;
                 }
-                new Scanner().scan(new Callback() {
+
+              new Scanner().scan();
+                Scanner.registerCallback(new Callback() {
                     @Override
                     public void onSuccess(List<String> datas) {
                         Log.v("bush", String.format("thread: %s", Thread.currentThread().getName()));
