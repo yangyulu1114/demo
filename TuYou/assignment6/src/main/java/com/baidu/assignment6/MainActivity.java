@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -100,13 +101,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void startScan() {
-        mMediaScanner.scan(mTimeStamp, PAGE_SIZE, new Callback() {
+        Configuration configuration = new Configuration.Builder()
+                .requireFilePath()
+                .requireFileSize()
+                .requireDisplayName()
+                .requireDateAdded()
+                .requireWidth()
+                .requireHeight()
+                .requireDateTaken()
+
+                .setTimestampRange(new long[] {-1, mTimeStamp})
+                .setSizeRange(new long[] {10240, -1})
+                .setWidthRange(new long[] {100, -1})
+                .setHeightRange(new long[] {100, -1})
+                .orderByDateTaken(Configuration.Order.DESC)
+                .setPageSize(5)
+                .addRequiredMimeType(Configuration.MimeType.JPG)
+                .addRequiredMimeType(Configuration.MimeType.PNG)
+                .build();
+        mMediaScanner.scan(configuration, new Callback() {
             @Override
             public void onSuccess(List<ImageBean> beanList) {
                 mImageBeanList.addAll(beanList);
                 mTimeStamp = mImageBeanList.get(mImageBeanList.size() - 1).getDateTaken();
                 conStructImageGroup(beanList);
                 Log.v("bush", "Status" + mStatus);
+                Log.v("bush", "timestamp" + mTimeStamp);
                 if (beanList.size() == 5 && (mStatus != CANCEL && mStatus != PAUSE)) {
                     mHandler.sendEmptyMessageDelayed(2, 100);
                 }
@@ -114,15 +134,33 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure() {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(MainActivity.this, "出错了, 正在扫描", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            public void onFailure(Exception e) {
+                Toast.makeText(MainActivity.this, "出错了, 正在扫描", Toast.LENGTH_SHORT).show();
             }
         });
+//        mMediaScanner.scan(mTimeStamp, PAGE_SIZE, new Callback() {
+//            @Override
+//            public void onSuccess(List<ImageBean> beanList) {
+//                mImageBeanList.addAll(beanList);
+//                mTimeStamp = mImageBeanList.get(mImageBeanList.size() - 1).getDateTaken();
+//                conStructImageGroup(beanList);
+//                Log.v("bush", "Status" + mStatus);
+//                if (beanList.size() == 5 && (mStatus != CANCEL && mStatus != PAUSE)) {
+//                    mHandler.sendEmptyMessageDelayed(2, 100);
+//                }
+//                    mHandler.sendEmptyMessageDelayed(1, 50);
+//            }
+//
+//            @Override
+//            public void onFailure() {
+//                mHandler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(MainActivity.this, "出错了, 正在扫描", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        });
     }
 
     @Override
@@ -227,6 +265,37 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mStatus = RESUME;
                 startScan();
+            }
+        });
+    }
+
+    private void test() {
+        Configuration configuration = new Configuration.Builder()
+                .requireFilePath()
+                .requireWidth()
+                .requireHeight()
+                .requireDateAdded()
+                .requireDateTaken()
+                .requireDisplayName()
+                .requireFileSize()
+                .setTimestampRange(new long[] {-1, System.currentTimeMillis()})
+                .setSizeRange(new long[] {10240, -1})
+                .setWidthRange(new long[] {100, -1})
+                .setHeightRange(new long[] {100, -1})
+                .orderByDateTaken(Configuration.Order.ASC)
+                .setPageSize(5)
+                .addRequiredMimeType(Configuration.MimeType.JPG)
+                .addRequiredMimeType(Configuration.MimeType.PNG)
+                .build();
+        mMediaScanner.scan(configuration, new Callback() {
+            @Override
+            public void onSuccess(List<ImageBean> beanList) {
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
             }
         });
     }

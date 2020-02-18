@@ -150,5 +150,19 @@ public class ImageBean {
         dateTakenMs = cursor.getLong(SystemMediaScanner.INDEX_DATETAKEN);
     }
 
-
+    @Override
+    public String toString() {
+        return "ImageBean{" +
+                "id=" + id +
+                ", size=" + size +
+                ", dateAddedMs=" + dateAddedMs +
+                ", width=" + width +
+                ", height=" + height +
+                ", latitude=" + latitude +
+                ", longtitude=" + longtitude +
+                ", dateTakenMs=" + dateTakenMs +
+                ", path='" + path + '\'' +
+                ", displayName='" + displayName + '\'' +
+                '}';
+    }
 }
