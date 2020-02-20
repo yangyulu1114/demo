@@ -1,5 +1,6 @@
 package com.baidu.assignment6;
 
+import android.database.Cursor;
 import android.provider.MediaStore;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class Configuration {
 
     private int mPageSize;
 
+    private List<Resolver> mResolvers;
+
     private Configuration(Builder builder) {
         mRequiredMimeTypes = builder.mRequiredMimeTypes;
         mRequiredFields = builder.mRequiredFields;
@@ -35,6 +38,11 @@ public class Configuration {
         mOrderField = builder.mOrderField;
         mOrder = builder.mOrder;
         mPageSize = builder.mPageSize;
+        mResolvers = builder.mResolvers;
+    }
+
+    public List<Resolver> getResolvers() {
+        return mResolvers;
     }
 
     public List<String> getRequiredMimeTypes() {
@@ -100,10 +108,16 @@ public class Configuration {
         private String mMimeType;
     }
 
+    public interface Resolver {
+        void resolve(ImageBean imageBean, Cursor cursor, int index);
+    }
+
     public static class Builder {
         private List<String> mRequiredMimeTypes = new ArrayList<>();
 
         private List<String> mRequiredFields = new ArrayList<>();
+
+        private List<Resolver> mResolvers = new ArrayList<>();
 
         private long[] mTimestampRange;
 
@@ -126,36 +140,85 @@ public class Configuration {
 
         public Builder requireFilePath() {
             mRequiredFields.add(MediaStore.Images.Media.DATA);
+            mResolvers.add(new Resolver() {
+
+                @Override
+                public void resolve(ImageBean imageBean, Cursor cursor, int index) {
+                    imageBean.setPath(cursor.getString(index));
+                }
+            });
             return this;
         }
 
         public Builder requireFileSize() {
             mRequiredFields.add(MediaStore.Images.Media.SIZE);
+            mResolvers.add(new Resolver() {
+
+                @Override
+                public void resolve(ImageBean imageBean, Cursor cursor, int index) {
+                    imageBean.setSize(cursor.getInt(index));
+                }
+            });
             return this;
         }
 
         public Builder requireDisplayName() {
             mRequiredFields.add(MediaStore.Images.Media.DISPLAY_NAME);
+            mResolvers.add(new Resolver() {
+
+                @Override
+                public void resolve(ImageBean imageBean, Cursor cursor, int index) {
+                    imageBean.setDisplayName(cursor.getString(index));
+                }
+            });
             return this;
         }
 
         public Builder requireDateAdded() {
             mRequiredFields.add(MediaStore.Images.Media.DATE_ADDED);
+            mResolvers.add(new Resolver() {
+
+                @Override
+                public void resolve(ImageBean imageBean, Cursor cursor, int index) {
+                    imageBean.setDateAdded(cursor.getInt(index) * 1000l);
+                }
+            });
             return this;
         }
 
         public Builder requireWidth() {
             mRequiredFields.add(MediaStore.Images.Media.WIDTH);
+            mResolvers.add(new Resolver() {
+
+                @Override
+                public void resolve(ImageBean imageBean, Cursor cursor, int index) {
+                    imageBean.setWidth(cursor.getInt(index));
+                }
+            });
             return this;
         }
 
         public Builder requireHeight() {
             mRequiredFields.add(MediaStore.Images.Media.HEIGHT);
+            mResolvers.add(new Resolver() {
+
+                @Override
+                public void resolve(ImageBean imageBean, Cursor cursor, int index) {
+                    imageBean.setHeight(cursor.getInt(index));
+                }
+            });
             return this;
         }
 
         public Builder requireDateTaken() {
             mRequiredFields.add(MediaStore.Images.Media.DATE_TAKEN);
+            mResolvers.add(new Resolver() {
+
+                @Override
+                public void resolve(ImageBean imageBean, Cursor cursor, int index) {
+                    imageBean.setDateTaken(cursor.getLong(index));
+                }
+            });
             return this;
         }
 

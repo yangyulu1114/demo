@@ -102,13 +102,13 @@ public class MainActivity extends AppCompatActivity {
 
     protected void startScan() {
         Configuration configuration = new Configuration.Builder()
-                .requireFilePath()
-                .requireFileSize()
                 .requireDisplayName()
+//                .requireDateTaken()
+                .requireFileSize()
+//                .requireHeight()
                 .requireDateAdded()
+                .requireFilePath()
                 .requireWidth()
-                .requireHeight()
-                .requireDateTaken()
 
                 .setTimestampRange(new long[] {-1, mTimeStamp})
                 .setSizeRange(new long[] {10240, -1})
@@ -127,9 +127,9 @@ public class MainActivity extends AppCompatActivity {
                 conStructImageGroup(beanList);
                 Log.v("bush", "Status" + mStatus);
                 Log.v("bush", "timestamp" + mTimeStamp);
-                if (beanList.size() == 5 && (mStatus != CANCEL && mStatus != PAUSE)) {
-                    mHandler.sendEmptyMessageDelayed(2, 100);
-                }
+//                if (beanList.size() == 5 && (mStatus != CANCEL && mStatus != PAUSE)) {
+//                    mHandler.sendEmptyMessageDelayed(2, 100);
+//                }
                     mHandler.sendEmptyMessageDelayed(1, 50);
             }
 

@@ -85,10 +85,17 @@ public class SystemMediaScanner {
                     getSelectionArgs(configuration),
                     getOrderLimitString(configuration));
 
-
+            List<Configuration.Resolver> resolvers = new ArrayList<>();
+            resolvers.add(new Configuration.Resolver() {
+                @Override
+                public void resolve(ImageBean imageBean, Cursor cursor, int index) {
+                    imageBean.setId(cursor.getInt(index));
+                }
+            });
+            resolvers.addAll(configuration.getResolvers());
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    ImageBean bean = new ImageBean(cursor);
+                    ImageBean bean = new ImageBean(cursor, resolvers);
                     Log.v("bush", bean.toString());
                     mImageList.add(bean);
 

@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
 public class ImageBean {
@@ -66,7 +67,7 @@ public class ImageBean {
         return date != null ? date : "";
     }
 
-    public void setDateAdded(int dateAdded) {
+    public void setDateAdded(long dateAdded) {
         this.dateAddedMs = dateAdded;
     }
 
@@ -139,15 +140,22 @@ public class ImageBean {
 
     }
 
-    public ImageBean(Cursor cursor) {
-        id = cursor.getInt(SystemMediaScanner.INDEX_ID);
-        path = cursor.getString(SystemMediaScanner.INDEX_DATA);
-        size = cursor.getInt(SystemMediaScanner.INDEX_SIZE);
-        displayName = cursor.getString(SystemMediaScanner.INDEX_NAME);
-        dateAddedMs = cursor.getInt(SystemMediaScanner.INDEX_DATE) * 1000l;
-        width = cursor.getInt(SystemMediaScanner.INDEX_WIDTH);
-        height = cursor.getInt(SystemMediaScanner.INDEX_HEIGHT);
-        dateTakenMs = cursor.getLong(SystemMediaScanner.INDEX_DATETAKEN);
+    public ImageBean(Cursor cursor, List<Configuration.Resolver> resolverList) {
+//        id = cursor.getInt(SystemMediaScanner.INDEX_ID);
+//        path = cursor.getString(SystemMediaScanner.INDEX_DATA);
+//        size = cursor.getInt(SystemMediaScanner.INDEX_SIZE);
+//        displayName = cursor.getString(SystemMediaScanner.INDEX_NAME);
+//        dateAddedMs = cursor.getInt(SystemMediaScanner.INDEX_DATE) * 1000l;
+//        width = cursor.getInt(SystemMediaScanner.INDEX_WIDTH);
+//        height = cursor.getInt(SystemMediaScanner.INDEX_HEIGHT);
+//        dateTakenMs = cursor.getLong(SystemMediaScanner.INDEX_DATETAKEN);
+
+
+
+        int index = 0;
+        for (Configuration.Resolver resolver : resolverList) {
+            resolver.resolve(this, cursor, index++);
+        }
     }
 
     @Override
