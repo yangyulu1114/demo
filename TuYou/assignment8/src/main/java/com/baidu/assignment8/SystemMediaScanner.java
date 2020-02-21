@@ -1,9 +1,12 @@
-package com.baidu.assignment6;
+package com.baidu.assignment8;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,57 +18,30 @@ import java.util.List;
 
 public class SystemMediaScanner {
 
-    private static List<ImageBean> mImageList;
+    private static List<ImageBean> mImageList = new LinkedList<>();
     private Context mContext;
-    //    private int PAGE_SIZE = 5;
-//    private long mTimestamp = System.currentTimeMillis();
-    private int mSIZE = 1024;
-    private int mWIDTH = 100;
-    private int mHEIGHT = 100;
-    private volatile boolean scanning = false;
+    HandlerThread mHandlerThread;
+    private Handler mMainHandler = new Handler(Looper.getMainLooper()); // 确保一定是主线程，以免调用者是在子线程new的scanner
+    private Handler mThreadHandler;
 
 
     public SystemMediaScanner(Context context) {
         mContext = context;
     }
 
-    public static final String[] PROJECTION = {
-            MediaStore.Images.Media._ID,
-            MediaStore.Images.Media.DATA,
-            MediaStore.Images.Media.SIZE,
-            MediaStore.Images.Media.DISPLAY_NAME,
-            MediaStore.Images.Media.DATE_ADDED,
-            MediaStore.Images.Media.WIDTH,
-            MediaStore.Images.Media.HEIGHT,
-            MediaStore.Images.Media.DATE_TAKEN,
-    };
-
-    public static final int INDEX_ID = 0;
-    public static final int INDEX_DATA = 1;
-    public static final int INDEX_SIZE = 2;
-    public static final int INDEX_NAME = 3;
-    public static final int INDEX_DATE = 4;
-    public static final int INDEX_WIDTH = 5;
-    public static final int INDEX_HEIGHT = 6;
-    public static final int INDEX_DATETAKEN = 7;
-
     public void scan(final Configuration configuration, final Callback callback) {
-        new Thread("yulu") {
-            @Override
-            public void run() {
-                doScan(configuration, callback);
-            }
-        }.start();
+       mHandlerThread = new HandlerThread("scanner");
+       mHandlerThread.start();
+       mThreadHandler = new Handler(mHandlerThread.getLooper());
+       mThreadHandler.post(new Runnable() {
+           @Override
+           public void run() {
+               doScan(configuration, callback);
+           }
+       });
     }
 
-    public void doScan(Configuration configuration, Callback callback) {
-        if (scanning == true) {
-            callback.onFailure(new Exception("already scanning"));
-            return;
-        }
-
-        scanning = true;
-        mImageList = new LinkedList<>();
+    public void doScan(Configuration configuration, final Callback callback) {
         Log.v("bush", "scan started");
         // TODO Auto-generated method stub
         Cursor cursor = null;
@@ -101,16 +77,20 @@ public class SystemMediaScanner {
 
                 } while (cursor != null && cursor.moveToNext());
             }
-
         } catch (Exception e) {
+            Log.e("bush", " " , e);
             e.printStackTrace();
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
-        callback.onSuccess(mImageList);
-        scanning = false;
+        mMainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                callback.onSuccess(mImageList);
+            }
+        });
     }
 
     private String getOrderLimitString(Configuration configuration) {
@@ -183,6 +163,9 @@ public class SystemMediaScanner {
 
     private List<String> getRangeSelectionArgs(long[] range) {
         List<String> args = new ArrayList<>();
+        if (range == null) {
+            return args;
+        }
         if (range[0] >= 0) {
             args.add(Long.toString(range[0]));
         }
@@ -205,6 +188,15 @@ public class SystemMediaScanner {
             ss.add(String.format("%s<?", value));
         }
         return StringUtils.join("and", ss);
+    }
+
+    public void test(final Callback callback) {
+        mMainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                callback.onSuccess(mImageList);
+            }
+        });
     }
 
 }

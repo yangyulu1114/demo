@@ -119,6 +119,25 @@ public class MainActivity extends AppCompatActivity {
                 .addRequiredMimeType(Configuration.MimeType.JPG)
                 .addRequiredMimeType(Configuration.MimeType.PNG)
                 .build();
+
+        Builder builder = new Builder().
+                requireDisplayName()
+//                .requireDateTaken()
+                .requireFileSize()
+//                .requireHeight()
+                .requireDateAdded()
+                .requireFilePath()
+                .requireWidth()
+
+                .setTimestampRange(new long[] {-1, mTimeStamp})
+                .setSizeRange(new long[] {10240, -1})
+                .setWidthRange(new long[] {100, -1})
+                .setHeightRange(new long[] {100, -1})
+                .orderByDateTaken(Configuration.Order.DESC)
+                .setPageSize(5)
+                .addRequiredMimeType(Builder.MimeType.JPG)
+                .addRequiredMimeType(Builder.MimeType.PNG);
+
         mMediaScanner.scan(configuration, new Callback() {
             @Override
             public void onSuccess(List<ImageBean> beanList) {

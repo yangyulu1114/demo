@@ -1,4 +1,4 @@
-package com.baidu.assignment6;
+package com.baidu.assignment8;
 
 import android.database.Cursor;
 import android.provider.MediaStore;
