@@ -1,0 +1,5 @@
+
+# 掌握Intent用法
+
+ - 通过Intent传递各类数据，包括String, Integer，还有自定义Serialiable和Parcelable
+ - 通过Intent在Activity、Service和广播传数据
