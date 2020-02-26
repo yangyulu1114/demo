@@ -16,7 +16,7 @@ public class SecondActivity extends Activity {
 //        Man man = (Man) intent.getSerializableExtra("extra_man");
 //        Log.v("bush", man.toString());
 
-        Student student = intent.getParcelableExtra("parcelable_test");
-        Log.v("bush", student.toString());
+        Animal animal = intent.getParcelableExtra("parcelable_test");
+        Log.v("bush", animal.toString());
     }
 }

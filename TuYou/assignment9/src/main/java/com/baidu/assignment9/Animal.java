@@ -5,6 +5,8 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +26,79 @@ public class Animal implements Parcelable {
 
     private Map<String, Student> map;
 
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", f=" + f +
+                ", work='" + work + '\'' +
+                ", names=" + names +
+                ", students=" + Arrays.toString(students) +
+                ", map=" + map +
+                '}';
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public double getF() {
+        return f;
+    }
+
+    public void setF(double f) {
+        this.f = f;
+    }
+
+    public String getWork() {
+        return work;
+    }
+
+    public void setWork(String work) {
+        this.work = work;
+    }
+
+    public List<String> getNames() {
+        return names;
+    }
+
+    public void setNames(List<String> names) {
+        this.names = names;
+    }
+
+    public Student[] getStudents() {
+        return students;
+    }
+
+    public void setStudents(Student[] students) {
+        this.students = students;
+    }
+
+    public Map<String, Student> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<String, Student> map) {
+        this.map = map;
+    }
+
+    public Animal() {
+    }
+
     protected Animal(Parcel in) {
         name = in.readString();
         age = in.readInt();
@@ -34,6 +109,16 @@ public class Animal implements Parcelable {
         for (int i = 0; i < len; i++) {
             names.add(in.readString());
         }
+//        int len2 = in.readInt();
+//        students = new Student[len2];
+//        for (int i = 0; i < len2; i++) {
+//            students[i] = in.readParcelable(Student.class.getClassLoader());
+//        }
+//        students = in.readParcelableArray(getClass().getClassLoader());
+        students = in.createTypedArray(Student.CREATOR);
+
+        map = new HashMap<>();
+        in.readMap(map, getClass().getClassLoader());
     }
 
     public static final Creator<Animal> CREATOR = new Creator<Animal>() {
@@ -59,9 +144,23 @@ public class Animal implements Parcelable {
         dest.writeInt(age);
         dest.writeDouble(f);
         dest.writeString(work);
-        dest.writeInt(name.length());
+        dest.writeInt(names.size());
         for (String s : names) {
             dest.writeString(s);
         }
+
+//        dest.writeParcelableArray(students, flags);
+        dest.writeTypedArray(students, flags);
+
+
+//        if (students == null) {
+//            dest.writeInt(0);
+//        } else {
+//            dest.writeInt(students.length);
+//        }
+//        if (students != null) {
+//            dest.writeParcelableArray(students, flags);
+//        }
+        dest.writeMap(map);
     }
 }
