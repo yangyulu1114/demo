@@ -22,6 +22,9 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_LIBRARY = "create table LIBRARY ("
             + "id integer primary key autoincrement, "
             + "books real)";
+    private static final String CREATE_AUTHOR = "create table AUTHOR ("
+            + "id integer primary key autoincrement, "
+            + "name text)";
 
     public MyDataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -34,13 +37,18 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_BOOK);
         db.execSQL(CREATE_CATEGORY);
         db.execSQL(CREATE_LIBRARY);
+        db.execSQL(CREATE_AUTHOR);
         Toast.makeText(mContext, "Create succeed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Toast.makeText(mContext, "update", Toast.LENGTH_SHORT).show();
         db.execSQL("drop table if exists BOOk");
         db.execSQL("drop table if exists CATEGORY");
+        db.execSQL("drop table if exists LIBRARY");
+        db.execSQL("drop table if exists AUTHOR");
+//        db.execSQL(CREATE_AUTHOR); 直接在这里建表也可以
         onCreate(db);
     }
 }
