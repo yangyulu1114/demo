@@ -3,18 +3,18 @@ package com.baidu.testrecordmanager;
 import java.io.Serializable;
 
 public class Record implements Serializable {
-    private String id;
+    private String key;
 
     private String name;
 
     private String type;
 
-    public String getId() {
-        return id;
+    public String getKey() {
+        return key;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getName() {
@@ -42,4 +42,14 @@ public class Record implements Serializable {
     }
 
     private int age;
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

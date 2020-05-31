@@ -6,7 +6,11 @@ public interface RecordManager {
 
     void offerRecord(Record record);
 
-    boolean removeRecord(Record record);
+    void removeRecord(Record record);
 
-    List<Record> loadAllRecords();
+    void loadAllRecords(CallBack<List<Record>> callBack);
+
+    void getRecord(String key, CallBack<Record> callBack);
+
+    void clearAll();
 }
