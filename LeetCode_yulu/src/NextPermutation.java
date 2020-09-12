@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class NextPermutation {
     //这题画图之后会比较清楚，分三个步骤
     //1.从右边开始往前遍历，找到第一个左边小于右边相邻数的点i.  2、从i右边找到比nums[i]大的最小数 3、将i右边的数reverse

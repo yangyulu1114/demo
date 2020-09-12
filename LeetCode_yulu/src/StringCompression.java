@@ -1,7 +1,3 @@
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-
 public class StringCompression {
 //    public int compress(char[] chars) {
 ////        int count[] = new int[128];

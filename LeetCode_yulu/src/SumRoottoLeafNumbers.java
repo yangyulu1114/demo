@@ -1,8 +1,5 @@
-import javafx.util.Pair;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Stack;
 
 public class SumRoottoLeafNumbers {
     public int sumNumbers(TreeNode root) {

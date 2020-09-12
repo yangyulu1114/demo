@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class SplitLinkedListinParts {
     public ListNode[] splitListToParts(ListNode root, int k) {
         int length = 0;

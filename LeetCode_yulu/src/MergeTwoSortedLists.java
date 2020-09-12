@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 public class MergeTwoSortedLists {
 
     public ListNode mergeTwoLists3(ListNode l1, ListNode l2) {

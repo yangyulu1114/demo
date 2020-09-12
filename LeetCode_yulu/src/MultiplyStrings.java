@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class MultiplyStrings {
 
     //    要注意特俗情况：其中有一个数为0 例如：923 * 0

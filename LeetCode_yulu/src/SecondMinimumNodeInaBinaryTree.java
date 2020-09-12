@@ -1,5 +1,3 @@
-import java.util.TreeSet;
-
 public class SecondMinimumNodeInaBinaryTree {
     public int findSecondMinimumValue(TreeNode root) {
         TreeNode left = root.left, right = root.right;

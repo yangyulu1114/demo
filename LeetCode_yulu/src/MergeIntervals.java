@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 public class MergeIntervals {
     //edge case[[1,3]]，本题需要注意的点，要注意最后一个interval要加进去，然后就是如果只有一个interval的情况

@@ -1,5 +1,3 @@
-import jdk.nashorn.internal.runtime.regexp.joni.constants.Traverse;
-
 //可以再看一下另一种方法Reverse Morris In-order Traversal
 public class ConvertBSTtoGreaterTree {
     public TreeNode convertBST(TreeNode root) {

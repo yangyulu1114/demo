@@ -1,5 +1,3 @@
-import java.util.HashMap;
-
 //本题可以根据Binary Search Tree的特性来做：即左子树一定小于或等于root的值，右子树一定大于或等于root的值
 
 public class LowestCommonAncestorofaBinarySearchTree {

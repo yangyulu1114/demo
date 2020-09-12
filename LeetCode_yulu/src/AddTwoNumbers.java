@@ -1,7 +1,3 @@
-import java.awt.*;
-import java.util.LinkedList;
-import java.util.List;
-
 //要注意结果输出的顺序
 //edge case两个链表都到尾部了，但是有进位的情况 [5],[5]
 public class AddTwoNumbers {

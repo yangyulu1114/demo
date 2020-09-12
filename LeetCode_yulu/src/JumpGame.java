@@ -1,5 +1,3 @@
-import org.omg.CORBA.UNKNOWN;
-
 import java.util.Arrays;
 
 public class JumpGame {

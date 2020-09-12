@@ -1,5 +1,3 @@
-import javafx.scene.SnapshotParametersBuilder;
-
 //这题坑居多，有很多地方需要注意,还有些其它方法可以再看一下
 public class ValidateIPAddress {
     public String validIPAddress(String IP) {

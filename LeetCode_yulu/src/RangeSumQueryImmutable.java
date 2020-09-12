@@ -1,8 +1,3 @@
-
-import javafx.util.Pair;
-
-import java.util.HashMap;
-
 public class RangeSumQueryImmutable {
 
 //    class NumArray {

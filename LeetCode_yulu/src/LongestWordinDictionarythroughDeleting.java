@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LongestWordinDictionarythroughDeleting {
     public String findLongestWord(String s, List<String> d) {

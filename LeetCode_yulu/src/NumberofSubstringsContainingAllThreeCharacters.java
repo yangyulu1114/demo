@@ -1,5 +1,3 @@
-import java.util.HashSet;
-
 public class NumberofSubstringsContainingAllThreeCharacters {
     public int numberOfSubstrings(String s) {
         int start = 0, end = 0, count = 0, characters = 0;
